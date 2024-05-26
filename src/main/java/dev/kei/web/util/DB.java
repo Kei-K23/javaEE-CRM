@@ -1,4 +1,4 @@
-package dev.kei.web.db;
+package dev.kei.web.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

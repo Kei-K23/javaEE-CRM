@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import dev.kei.web.db.DB;
 import dev.kei.web.entity.User;
+import dev.kei.web.util.DB;
 
 public class UserRepository {
 

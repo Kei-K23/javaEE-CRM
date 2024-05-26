@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import dev.kei.web.entity.User;
 import dev.kei.web.service.UserService;
+import dev.kei.web.util.PasswordUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -29,7 +30,8 @@ public class RegisterServlet extends HttpServlet {
 		UserService userService = new UserService();
 
 		String username = request.getParameter("username");
-		String password = request.getParameter("password");
+
+		String password = PasswordUtil.hashPassword(request.getParameter("password"));
 		String email = request.getParameter("email");
 
 		User user = new User(username, email, password);
