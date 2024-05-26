@@ -9,14 +9,16 @@ public class UserService {
 
 	public List<User> findAll() {
 		UserRepository userRepository = new UserRepository();
-
 		return userRepository.findAll();
 	}
 
 	public User findByUsername(String username) {
 		UserRepository userRepository = new UserRepository();
-
 		return userRepository.findByUsername(username);
 	}
 
+	public void save(User user) {
+		UserRepository userRepository = new UserRepository();
+		userRepository.save(user);
+	}
 }

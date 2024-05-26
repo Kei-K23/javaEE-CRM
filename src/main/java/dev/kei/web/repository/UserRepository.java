@@ -65,4 +65,26 @@ public class UserRepository {
 			throw new RuntimeException("Something went wrong", e);
 		}
 	}
+
+	public void save(User user) {
+		try (Connection connection = DB.getConnection();
+				PreparedStatement preStat = connection
+						.prepareStatement("INSERT INTO users (username, email, password) VALUES (?, ?, ?)")) {
+			preStat.setString(1, user.getUsername());
+			preStat.setString(2, user.getEmail());
+			preStat.setString(3, user.getPassword());
+			// save user
+			int rowsAffected = preStat.executeUpdate();
+			logger.info("save::Creating user...");
+
+			if (rowsAffected > 0) {
+				logger.info("save::Creating user...");
+			} else {
+				logger.severe("Error occurred while creating user");
+			}
+		} catch (Exception e) {
+			logger.severe("Error occurred while creating user: " + e.getMessage());
+			throw new RuntimeException("Something went wrong", e);
+		}
+	}
 }
