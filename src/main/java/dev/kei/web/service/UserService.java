@@ -6,13 +6,10 @@ import dev.kei.web.entity.User;
 import dev.kei.web.repository.UserRepository;
 
 public class UserService {
-	private final UserRepository userRepository;
-
-	public UserService(UserRepository userRepository) {
-		this.userRepository = userRepository;
-	}
 
 	public List<User> findAll() {
+		UserRepository userRepository = new UserRepository();
+
 		return userRepository.findAll();
 	}
 }

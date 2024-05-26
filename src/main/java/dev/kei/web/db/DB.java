@@ -7,6 +7,10 @@ import java.sql.SQLException;
 public class DB {
 	private static Connection connection;
 
+	private DB() {
+		// private constructor to prevent instantiation
+	}
+
 	// singleton pattern
 	public static Connection getConnection() throws SQLException {
 		if (connection == null || connection.isClosed()) {
@@ -14,11 +18,14 @@ public class DB {
 				// hide credentials
 				String dbURL = "jdbc:mysql://localhost:3306/javaEE-crm";
 				String dbUsername = "root";
-				String password = "keik23012023";
+				String dbPassword = "keik23012023";
 
-				connection = DriverManager.getConnection(dbURL, dbUsername, password);
+				DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+
+				// Create new connection
+				connection = DriverManager.getConnection(dbURL, dbUsername, dbPassword);
 			} catch (Exception e) {
-				e.printStackTrace();
+				throw new SQLException("Failed to connect to the database: " + e.getMessage());
 			}
 		}
 		return connection;

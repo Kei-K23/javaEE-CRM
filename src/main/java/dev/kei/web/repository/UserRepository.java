@@ -5,11 +5,14 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import dev.kei.web.db.DB;
 import dev.kei.web.entity.User;
 
 public class UserRepository {
+
+	private static final Logger logger = Logger.getLogger(UserRepository.class.getName());
 
 	public List<User> findAll() {
 		try (Connection connection = DB.getConnection();
@@ -17,6 +20,7 @@ public class UserRepository {
 				ResultSet rs = statement.executeQuery("SELECT * FROM users");
 
 		) {
+			logger.info("Retrieving users from the database...");
 			List<User> users = new ArrayList<>();
 			while (rs.next()) {
 				int id = rs.getInt("id");
@@ -30,7 +34,8 @@ public class UserRepository {
 			}
 			return users;
 		} catch (Exception e) {
-			throw new RuntimeException("Something went wrong");
+			logger.severe("Error occurred while retrieving users: " + e.getMessage());
+			throw new RuntimeException("Something went wrong", e);
 		}
 	}
 }
