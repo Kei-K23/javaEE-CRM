@@ -1,10 +1,8 @@
 package dev.kei.web.controller;
 
 import java.io.IOException;
-import java.util.logging.Logger;
 
 import dev.kei.web.entity.User;
-import dev.kei.web.repository.UserRepository;
 import dev.kei.web.service.UserService;
 import dev.kei.web.util.PasswordUtil;
 import jakarta.servlet.ServletException;
@@ -17,7 +15,6 @@ import jakarta.servlet.http.HttpSession;
 @WebServlet(name = "LoginServlet", urlPatterns = "/login")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final Logger logger = Logger.getLogger(UserRepository.class.getName());
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

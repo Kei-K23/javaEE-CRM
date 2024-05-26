@@ -28,8 +28,10 @@ public class UserRepository {
 				String username = rs.getString("username");
 				String email = rs.getString("email");
 				String password = rs.getString("password");
+				int role = rs.getInt("role");
 				User user = new User(username, email, password);
 				user.setId(id);
+				user.setRole(role);
 
 				users.add(user);
 			}
@@ -52,11 +54,13 @@ public class UserRepository {
 					String name = rs.getString("username");
 					String email = rs.getString("email");
 					String password = rs.getString("password");
+					int role = rs.getInt("role");
 
 					user.setId(id);
 					user.setUsername(name);
 					user.setEmail(email);
 					user.setPassword(password);
+					user.setRole(role);
 				}
 			}
 			return user;
@@ -84,6 +88,24 @@ public class UserRepository {
 			}
 		} catch (Exception e) {
 			logger.severe("Error occurred while creating user: " + e.getMessage());
+			throw new RuntimeException("Something went wrong", e);
+		}
+	}
+
+	// Method to delete a user by ID
+	public void delete(int id) {
+		try (Connection connection = DB.getConnection();
+				PreparedStatement preStat = connection.prepareStatement("DELETE FROM users WHERE id = ?")) {
+			preStat.setInt(1, id);
+
+			int rowsAffected = preStat.executeUpdate();
+			if (rowsAffected > 0) {
+				logger.info("delete::User with ID " + id + " deleted successfully.");
+			} else {
+				logger.severe("delete::No user found with ID " + id);
+			}
+		} catch (Exception e) {
+			logger.severe("delete::Error occurred while deleting user with ID " + id + ": " + e.getMessage());
 			throw new RuntimeException("Something went wrong", e);
 		}
 	}
