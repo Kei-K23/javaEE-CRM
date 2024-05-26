@@ -29,5 +29,6 @@
 </div>	
 <button type="submit" class="btn btn-primary">Login</button>
 </form>
+<a href="/web1/register">New user? Register here</a>
 </body>
 </html>

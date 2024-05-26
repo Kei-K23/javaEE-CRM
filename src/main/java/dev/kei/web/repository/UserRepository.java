@@ -21,7 +21,7 @@ public class UserRepository {
 				ResultSet rs = statement.executeQuery("SELECT * FROM users");
 
 		) {
-			logger.info("Retrieving users from the database...");
+			logger.info("findAll::Retrieving users from the database...");
 			List<User> users = new ArrayList<>();
 			while (rs.next()) {
 				int id = rs.getInt("id");
@@ -46,7 +46,7 @@ public class UserRepository {
 			preStat.setString(1, username);
 			User user = new User();
 			try (ResultSet rs = preStat.executeQuery()) {
-				logger.info("Retrieving users from the database...");
+				logger.info("findByUsername::Retrieving user from the database...");
 				while (rs.next()) {
 					int id = rs.getInt("id");
 					String name = rs.getString("username");
