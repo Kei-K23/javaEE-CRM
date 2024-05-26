@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,22 +11,13 @@
 </head>
 <body>
     <h1>Welcome to Your Account</h1>
-    <%
-        String cookieUsername = null;
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if ("username".equals(cookie.getName())) {
-                    cookieUsername = cookie.getValue();
-                    break;
-                }
-            }
-        }
-    %>
-    <% if (cookieUsername != null) { %>
-        <p>Username: <%= cookieUsername %></p>
-    <% } else { %>
-        <p>Welcome, Guest!</p>
-    <% } %>
+    <c:choose>
+        <c:when test="${not empty sessionScope.username}">
+            <p>Welcome, ${sessionScope.username}!</p>
+        </c:when>
+        <c:otherwise>
+            <p>You are not logged in. <a href="${pageContext.request.contextPath}/login.jsp">Login here</a>.</p>
+        </c:otherwise>
+    </c:choose>
 </body>
 </html>
