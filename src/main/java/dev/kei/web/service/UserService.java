@@ -12,4 +12,11 @@ public class UserService {
 
 		return userRepository.findAll();
 	}
+
+	public User findByUsername(String username) {
+		UserRepository userRepository = new UserRepository();
+
+		return userRepository.findByUsername(username);
+	}
+
 }

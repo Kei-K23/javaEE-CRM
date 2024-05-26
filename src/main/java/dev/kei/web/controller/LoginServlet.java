@@ -2,6 +2,8 @@ package dev.kei.web.controller;
 
 import java.io.IOException;
 
+import dev.kei.web.entity.User;
+import dev.kei.web.service.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -24,10 +26,14 @@ public class LoginServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
+		UserService userService = new UserService();
+
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 
-		if (username.equals("jack") && password.equals("password")) {
+		User dbUser = userService.findByUsername(username);
+
+		if (username.equals(dbUser.getUsername()) && password.equals(dbUser.getPassword())) {
 			HttpSession session = request.getSession();
 			session.setAttribute("username", username);
 			session.setMaxInactiveInterval(60 * 60 * 24);

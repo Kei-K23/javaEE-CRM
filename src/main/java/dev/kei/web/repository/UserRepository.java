@@ -1,6 +1,7 @@
 package dev.kei.web.repository;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -35,6 +36,32 @@ public class UserRepository {
 			return users;
 		} catch (Exception e) {
 			logger.severe("Error occurred while retrieving users: " + e.getMessage());
+			throw new RuntimeException("Something went wrong", e);
+		}
+	}
+
+	public User findByUsername(String username) {
+		try (Connection connection = DB.getConnection();
+				PreparedStatement preStat = connection.prepareStatement("SELECT * FROM users WHERE username = ?")) {
+			preStat.setString(1, username);
+			User user = new User();
+			try (ResultSet rs = preStat.executeQuery()) {
+				logger.info("Retrieving users from the database...");
+				while (rs.next()) {
+					int id = rs.getInt("id");
+					String name = rs.getString("username");
+					String email = rs.getString("email");
+					String password = rs.getString("password");
+
+					user.setId(id);
+					user.setUsername(name);
+					user.setEmail(email);
+					user.setPassword(password);
+				}
+			}
+			return user;
+		} catch (Exception e) {
+			logger.severe("Error occurred while retrieving user: " + e.getMessage());
 			throw new RuntimeException("Something went wrong", e);
 		}
 	}
